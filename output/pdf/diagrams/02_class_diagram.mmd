@@ -1,0 +1,92 @@
+classDiagram
+    class Manager {
+        -bool isTransitioning
+        +OpenContent()
+        +OpenVrcWorld()
+        +OpenNuDigital()
+        +OpenDimensionsGate()
+        +OpenNURoom()
+        +OpenPenguins()
+        +OpenSimulation()
+        +BackToMenu()
+    }
+    class SceneLoader {
+        -bool isLoading
+        +LoadScene(sceneName)
+    }
+    class ScreenTransition {
+        -Sequence transitionSequence
+        +PlayTransition()
+    }
+    class GameMenuController {
+        +SelectFirstButton()
+    }
+    class GameMenuItem {
+        +OnPointerEnter()
+        +OnSelect()
+        +OnDeselect()
+    }
+    class CommonUI {
+        -bool isMenuOpen
+        +ToggleMenu()
+        +ReturnToHome()
+    }
+    class MovePlayerInput {
+        +GatherInput()
+        +SetInput()
+    }
+    class CharactorMover {
+        +SetInput(axis,target,isRun,isJump)
+        +RequestJump()
+    }
+    class PlayerCamera {
+        <<abstract>>
+        +Target Vector3
+        +SetInput(delta,scroll)
+    }
+    class ThirdPersonCamera
+    class TitleManager
+    class GameManager {
+        <<singleton>>
+        +RemainingTime float
+        +RescuedPenguins int
+        +Score int
+        +AddPenguin()
+        +FinishGame()
+        +SaveResult()
+        +ResetGame()
+        +GetRank() string
+    }
+    class FollowerManager {
+        <<singleton>>
+        +AddFollower(follower)
+        +RemoveFollower(follower)
+    }
+    class Follower {
+        +Collect()
+        +SetTarget(target)
+        +ToggleFollow()
+    }
+    class Goal
+    class RespawnController
+    class TimerUI
+    class RescueUI
+    class ResultUI
+
+    Manager --> ScreenTransition : 演出
+    Manager --> SceneLoader : シーン読込
+    GameMenuController --> GameMenuItem : 初期選択
+    CommonUI --> Manager : Startへ戻る
+    MovePlayerInput --> CharactorMover : 移動入力
+    MovePlayerInput --> PlayerCamera : 視点入力
+    PlayerCamera <|-- ThirdPersonCamera
+    TitleManager --> GameManager : ResetGame
+    TitleManager --> SceneLoader : Gameへ
+    Follower --> FollowerManager : 追従列へ登録
+    Follower --> GameManager : AddPenguin
+    Goal --> GameManager : SaveResult
+    RespawnController --> CharactorMover : プレイヤー復帰
+    TimerUI --> GameManager : RemainingTime
+    RescueUI --> GameManager : RescuedPenguins
+    ResultUI --> GameManager : Score / GetRank
+

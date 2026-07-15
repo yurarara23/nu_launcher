@@ -1,0 +1,31 @@
+flowchart LR
+    Visitor["展示来場者"]
+
+    subgraph System["nu_launcher 展示システム"]
+        Browse(["コンテンツ一覧を見る"])
+        Switch(["VRC World / NU Digitalへ切り替える"])
+        Detail(["ゲーム詳細を見る"])
+        Launch(["展示コンテンツを起動する"])
+        Loading(["ロード画面を表示する"])
+        Control(["キャラクターを操作する"])
+        Pause(["ポーズ / 再開する"])
+        Home(["ホームへ戻る"])
+        Penguin(["Penguinsをプレイする"])
+        Rescue(["ペンギンを救出する"])
+        Goal(["ゴールする / 時間切れになる"])
+        Result(["救出数・スコア・ランクを見る"])
+    end
+
+    Visitor --> Browse
+    Visitor --> Switch
+    Visitor --> Detail
+    Visitor --> Launch
+    Launch -. "include" .-> Loading
+    Visitor --> Control
+    Visitor --> Pause
+    Visitor --> Home
+    Visitor --> Penguin
+    Penguin -. "include" .-> Rescue
+    Penguin -. "include" .-> Goal
+    Goal -. "include" .-> Result
+

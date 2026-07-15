@@ -1,0 +1,38 @@
+stateDiagram-v2
+    [*] --> Content : アプリ起動
+
+    state Launcher {
+        Content --> VRCWorld : VRC World選択
+        VRCWorld --> NUDigital : NU Digital選択
+        NUDigital --> Content : Content選択
+        Content --> DetailDG : DimensionsGate選択
+        Content --> DetailNU : NU Room選択
+        Content --> DetailPenguins : Penguins選択
+        Content --> DetailSimulation : Simulation選択
+        DetailDG --> Content : 戻る
+        DetailNU --> Content : 戻る
+        DetailPenguins --> Content : 戻る
+        DetailSimulation --> Content : 戻る
+    }
+
+    DetailDG --> Loading : プレイ
+    DetailNU --> Loading : プレイ
+    DetailSimulation --> Loading : プレイ
+    DetailPenguins --> Loading : プレイ
+    Loading --> OtherGame : DG / NU / Simulation読込完了
+    Loading --> PenguinTitle : Title読込完了
+
+    OtherGame --> Paused : Pause
+    Paused --> OtherGame : Pause / 閉じる
+    Paused --> Content : ホーム
+
+    PenguinTitle --> Playing : 開始入力受付後
+    Playing --> PenguinPaused : Pause
+    PenguinPaused --> Playing : Pause / 閉じる
+    PenguinPaused --> Content : ホーム
+    Playing --> ResultIntro : ゴール / 残り時間0
+    ResultIntro --> RescueResult : ○
+    RescueResult --> ScoreResult : ○
+    ScoreResult --> RankResult : ○
+    RankResult --> Content : ○ / ReturnToTitle
+

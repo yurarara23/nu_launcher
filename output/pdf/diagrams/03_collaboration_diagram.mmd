@@ -1,0 +1,32 @@
+flowchart LR
+    User["展示来場者"]
+    Manager["1: Manager"]
+    Transition["2: ScreenTransition"]
+    Loader["3: SceneLoader"]
+    Scene["4: Unity SceneManager"]
+    Title["5: TitleManager"]
+    GM["6: GameManager"]
+    Follower["7: Follower"]
+    FM["8: FollowerManager"]
+    Goal["9: Goal"]
+    Result["10: ResultUI"]
+
+    User -- "1. Penguins詳細を選択" --> Manager
+    Manager -- "1.1 PlayTransition()" --> Transition
+    User -- "2. プレイを押す" --> Manager
+    Manager -- "2.1 LoadScene(Title)" --> Loader
+    Loader -- "2.2 LoadSceneAsync(Title)" --> Scene
+    User -- "3. 開始入力" --> Title
+    Title -- "3.1 ResetGame()" --> GM
+    Title -- "3.2 LoadScene(Game)" --> Scene
+    User -- "4. ペンギンへ接触" --> Follower
+    Follower -- "4.1 AddFollower(this)" --> FM
+    Follower -- "4.2 AddPenguin()" --> GM
+    User -- "5. ゴールへ接触" --> Goal
+    Goal -- "5.1 SaveResult()" --> GM
+    Goal -- "5.2 LoadScene(Result)" --> Scene
+    User -- "6. ○ボタン" --> Result
+    Result -- "6.1 救出数 / スコア / ランク取得" --> GM
+    Result -- "6.2 ReturnToTitle()" --> GM
+    GM -- "6.3 LoadScene(Start)" --> Scene
+
